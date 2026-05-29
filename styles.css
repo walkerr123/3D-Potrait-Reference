@@ -72,23 +72,26 @@ html, body { width: 100%; height: 100%; background: var(--bg); color: var(--text
   position: fixed;
   top: 52px; left: 0; right: 0; bottom: 0;
   display: grid;
-  grid-template-columns: 360px 1fr; /* ← LEFT: model width | RIGHT: gallery takes rest */
+  grid-template-columns: 360px 1fr;
 }
 
-/* ── 3D MODEL VIEWPORT (left panel) ── */
+/* Left column — full height, holds model + anything below */
+#leftCol {
+  border-right: 1px solid var(--border);
+  background: var(--bg);
+  overflow-y: auto;
+}
+
+/* 3D model square */
 #viewport {
   position: relative;
-  background: var(--bg);
+  width: 100%;
+  aspect-ratio: 1 / 1;        /* ← keeps it square */
   overflow: hidden;
-  border-right: 1px solid var(--border);
-  width: 360px;               /* ← model width */
-  height: 360px;              /* ← model height — square */
-  flex-shrink: 0;
-  align-self: start;          /* sit at top, leaves space below for extra content */
 }
 
 /* Three.js canvas fills the viewport */
-#canvasContainer { width: 360px; height: 360px; }
+#canvasContainer { width: 100%; height: 100%; }
 #canvasContainer canvas { display: block; width: 100% !important; height: 100% !important; }
 
 /* "DRAG TO ROTATE" pill at top of model */
