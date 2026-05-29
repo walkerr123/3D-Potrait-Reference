@@ -119,7 +119,7 @@ html, body { width: 100%; height: 100%; background: var(--bg); color: var(--text
 
 /* Compass bottom-left of model */
 #compass { position: absolute; bottom: 24px; left: 24px; display: flex; align-items: center; gap: 14px; z-index: 10; }
-#compassCanvas { flex-shrink: 0; }
+#compassCanvas { flex-shrink: 0; cursor: pointer; }
 #compassInfo { display: flex; flex-direction: column; gap: 4px; }
 #compassAngleLabel { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; color: var(--green); }
 #compassAngleSub   { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.08em; color: var(--muted); }

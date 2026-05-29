@@ -10,19 +10,23 @@ let searchTimeout = null;
 
 // ── ANGLE MAP ─────────────────────────────────────
 const ANGLES = [
-  { key: 'front',              label: 'Front View',        degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',
+  { key: 'front',              label: 'Front View',         degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',
     pinterestIrl: 'https://in.pinterest.com/Kyliekeewee/photo-bashing/?invite_code=ab8520c8a3ed4c7896d272ccbb8465a3&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/eeriedeceit/front-facing-anime-pfp/?invite_code=0351da8e2c0c407f9980757a29fe58e6&sender=1065805205473485962',
-    yawMin: -22, yawMax: 22 },
-  { key: 'quarter_right',      label: '3/4 Right View',    degrees: '45°',  desc: 'Three-quarter angle to the right — great for facial structure and nose bridge',
+    yawMin: 338, yawMax: 360 },
+  { key: 'front',              label: 'Front View',         degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',
+    pinterestIrl: 'https://in.pinterest.com/Kyliekeewee/photo-bashing/?invite_code=ab8520c8a3ed4c7896d272ccbb8465a3&sender=1065805205473485962',
+    pinterestAnime: 'https://in.pinterest.com/eeriedeceit/front-facing-anime-pfp/?invite_code=0351da8e2c0c407f9980757a29fe58e6&sender=1065805205473485962',
+    yawMin: 0,   yawMax: 22 },
+  { key: 'quarter_right',      label: '3/4 Right View',     degrees: '45°',  desc: 'Three-quarter angle to the right — great for facial structure and nose bridge',
     pinterestIrl: 'https://in.pinterest.com/avernon/34-faces/?invite_code=6161e1370caf497b8db355d86ca25dfc&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/ltzmeow/anime-characters-34-faces/?invite_code=a23111a75116428b8ef56ce335190c8f&sender=1065805205473485962',
     yawMin: 22,  yawMax: 68 },
-  { key: 'profile_right',      label: 'Side Profile Right', degrees: '90°', desc: 'Full side profile — jawline, nose silhouette, and ear placement',
+  { key: 'profile_right',      label: 'Side Profile Right', degrees: '90°',  desc: 'Full side profile — jawline, nose silhouette, and ear placement',
     pinterestIrl: 'https://in.pinterest.com/stewartry/right-face/?invite_code=63764397760a4bfebb46b41e919a910b&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/right-faced/?invite_code=eb03c924444e4b7c9c87cf22277e20f7&sender=1065805205473485962',
     yawMin: 68,  yawMax: 112 },
-  { key: 'back_quarter_right', label: 'Back 3/4 Right',    degrees: '135°', desc: 'Back three-quarter view — skull shape and back of neck',
+  { key: 'back_quarter_right', label: 'Back 3/4 Right',     degrees: '135°', desc: 'Back three-quarter view — skull shape and back of neck',
     pinterestIrl: 'https://in.pinterest.com/naomiecsedii/back-faced-pfp/?invite_code=5f9eeea543eb4f7083bc5f21041589cb&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3',
     yawMin: 112, yawMax: 157 },
@@ -30,7 +34,7 @@ const ANGLES = [
     pinterestIrl: 'https://in.pinterest.com/naomiecsedii/back-faced-pfp/?invite_code=5f9eeea543eb4f7083bc5f21041589cb&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3',
     yawMin: 157, yawMax: 203 },
-  { key: 'back_quarter_left',  label: 'Back 3/4 Left',     degrees: '225°', desc: 'Back three-quarter view to the left',
+  { key: 'back_quarter_left',  label: 'Back 3/4 Left',      degrees: '225°', desc: 'Back three-quarter view to the left',
     pinterestIrl: 'https://in.pinterest.com/naomiecsedii/back-faced-pfp/?invite_code=5f9eeea543eb4f7083bc5f21041589cb&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3',
     yawMin: 203, yawMax: 248 },
@@ -38,7 +42,7 @@ const ANGLES = [
     pinterestIrl: 'https://in.pinterest.com/stewartry/left-face/?invite_code=949138a2346042309bc459843962c4c2&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/left-faced/?invite_code=3ebd4d5344c94a7abdefdd9c98d978e8&sender=1065805205473485962',
     yawMin: 248, yawMax: 292 },
-  { key: 'quarter_left',       label: '3/4 Left View',     degrees: '315°', desc: 'Three-quarter angle to the left — facial structure reference',
+  { key: 'quarter_left',       label: '3/4 Left View',      degrees: '315°', desc: 'Three-quarter angle to the left — facial structure reference',
     pinterestIrl: 'https://in.pinterest.com/avernon/34-faces/?invite_code=6161e1370caf497b8db355d86ca25dfc&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/ltzmeow/anime-characters-34-faces/?invite_code=a23111a75116428b8ef56ce335190c8f&sender=1065805205473485962',
     yawMin: 292, yawMax: 338 },
@@ -46,9 +50,8 @@ const ANGLES = [
 
 function getAngleData(yawDeg) {
   const yaw = ((yawDeg % 360) + 360) % 360;
-  const yawSigned = yaw > 180 ? yaw - 360 : yaw; // convert to -180..180
   for (const a of ANGLES) {
-    if (yawSigned >= a.yawMin && yawSigned < a.yawMax) return a;
+    if (yaw >= a.yawMin && yaw < a.yawMax) return a;
   }
   return ANGLES[0];
 }
@@ -268,7 +271,6 @@ function onCameraChange() {
   let pitchDeg = 90 - THREE.MathUtils.radToDeg(spherical.phi);
 
   updateCompass(yawDeg, pitchDeg);
-  console.log('yaw:', yawDeg);
 
   const angleData = getAngleData(yawDeg);
 
@@ -287,6 +289,29 @@ function onCameraChange() {
 }
 
 // ── COMPASS DRAWING ────────────────────────────────
+const COMPASS_POINTS = [
+  { key: 'front',              label: 'F',   yaw: 0   },
+  { key: 'quarter_right',      label: '¾R',  yaw: 45  },
+  { key: 'profile_right',      label: 'R',   yaw: 90  },
+  { key: 'back_quarter_right', label: '¾BR', yaw: 135 },
+  { key: 'back',               label: 'B',   yaw: 180 },
+  { key: 'back_quarter_left',  label: '¾BL', yaw: 225 },
+  { key: 'profile_left',       label: 'L',   yaw: 270 },
+  { key: 'quarter_left',       label: '¾L',  yaw: 315 },
+];
+
+function snapToAngle(yawDeg) {
+  const r = controls.target.distanceTo(camera.position);
+  const phi = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target)).phi;
+  // Convert our yawDeg back to Three.js theta (undo the offset and negation)
+  const theta = THREE.MathUtils.degToRad(-(yawDeg - 180));
+  const spherical = new THREE.Spherical(r, phi, theta);
+  const pos = new THREE.Vector3().setFromSpherical(spherical).add(controls.target);
+  camera.position.copy(pos);
+  controls.update();
+  onCameraChange();
+}
+
 function updateCompass(yawDeg, pitchDeg) {
   const canvas = document.getElementById('compassCanvas');
   const ctx = canvas.getContext('2d');
@@ -322,6 +347,19 @@ function updateCompass(yawDeg, pitchDeg) {
   ctx.lineWidth = 2;
   ctx.lineCap = 'round';
   ctx.stroke();
+
+  // Clickable dots at each compass point
+  COMPASS_POINTS.forEach(pt => {
+    const a = THREE.MathUtils.degToRad(pt.yaw - 90);
+    const dx = Math.cos(a) * (r - 2);
+    const dy = Math.sin(a) * (r - 2);
+    const isActive = pt.yaw >= (((yawDeg % 360) + 360) % 360) - 22 &&
+                     pt.yaw <  (((yawDeg % 360) + 360) % 360) + 22;
+    ctx.beginPath();
+    ctx.arc(cx + dx, cy + dy, 4, 0, Math.PI * 2);
+    ctx.fillStyle = isActive ? (getComputedStyle(document.body).getPropertyValue('--green').trim() || '#00e5a0') : 'rgba(255,255,255,0.25)';
+    ctx.fill();
+  });
 
   // Center dot
   ctx.beginPath();
@@ -414,5 +452,26 @@ document.getElementById('helpModal').addEventListener('click', (e) => {
   if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
 });
 
-// ── KICK OFF ───────────────────────────────────────
+// ── COMPASS CLICK ────────────────────────────────
+document.getElementById('compassCanvas').addEventListener('click', (e) => {
+  const canvas = e.target;
+  const rect = canvas.getBoundingClientRect();
+  const cx = canvas.width / 2, cy = canvas.height / 2, r = 34;
+  const mx = (e.clientX - rect.left) * (canvas.width / rect.width) - cx;
+  const my = (e.clientY - rect.top) * (canvas.height / rect.height) - cy;
+
+  // Find closest compass point within click radius
+  let closest = null, minDist = 12;
+  COMPASS_POINTS.forEach(pt => {
+    const a = THREE.MathUtils.degToRad(pt.yaw - 90);
+    const dx = Math.cos(a) * (r - 2);
+    const dy = Math.sin(a) * (r - 2);
+    const dist = Math.hypot(mx - dx, my - dy);
+    if (dist < minDist) { minDist = dist; closest = pt; }
+  });
+
+  if (closest) snapToAngle(closest.yaw);
+});
+
+──
 initScene();
