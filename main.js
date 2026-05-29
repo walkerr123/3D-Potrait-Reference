@@ -391,9 +391,7 @@ async function fetchRefs(angleData) {
   const query = encodeURIComponent(currentMode === 'irl' ? q.irl : q.anime);
 
   try {
-    const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(`https://api.pexels.com/v1/search?query=${query}&per_page=6&orientation=portrait`)}`, {
-      headers: { Authorization: PEXELS_KEY }
-    });
+    const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.pexels.com/v1/search?query=${query}&per_page=6&orientation=portrait&authorization=${PEXELS_KEY}`)}`);
     const data = await res.json();
     grid.innerHTML = '';
     data.photos.forEach(photo => {
