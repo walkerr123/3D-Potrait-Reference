@@ -294,7 +294,7 @@ function onCameraChange() {
   );
 
   // yaw: horizontal rotation (azimuth) — negated to match model orientation
-  let yawDeg = ((-THREE.MathUtils.radToDeg(spherical.theta)) + 360) % 360;
+  let yawDeg = ((-THREE.MathUtils.radToDeg(spherical.theta)) + 180 + 360) % 360;
   // pitch: vertical tilt
   let pitchDeg = 90 - THREE.MathUtils.radToDeg(spherical.phi);
 
