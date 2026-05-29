@@ -269,6 +269,7 @@ function onCameraChange() {
   let pitchDeg = 90 - THREE.MathUtils.radToDeg(spherical.phi);
 
   updateCompass(yawDeg, pitchDeg);
+  console.log('yaw:', Math.round(yawDeg));
 
   const angleData = getAngleData(yawDeg);
 
