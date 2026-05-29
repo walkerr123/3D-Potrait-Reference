@@ -344,7 +344,7 @@ function updateCompass(yawDeg, pitchDeg) {
   }
 
   // Yaw indicator line
-  const yawRad = (yawDeg - 90) * Math.PI / 180;
+  const yawRad = (yawDeg - 180 - 90) * Math.PI / 180;
   ctx.beginPath();
   ctx.moveTo(cx, cy);
   ctx.lineTo(cx + Math.cos(yawRad) * (r - 4), cy + Math.sin(yawRad) * (r - 4));
@@ -393,7 +393,6 @@ async function fetchRefs(angleData) {
   try {
     const res = await fetch(`/api/pexels?query=${query}`);
     const data = await res.json();
-    console.log('pexels data:', data);
     grid.innerHTML = '';
     data.photos.forEach(photo => {
       const img = document.createElement('img');
