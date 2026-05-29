@@ -13,11 +13,7 @@ const ANGLES = [
   { key: 'front',              label: 'Front View',         degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',
     pinterestIrl: 'https://in.pinterest.com/Kyliekeewee/photo-bashing/?invite_code=ab8520c8a3ed4c7896d272ccbb8465a3&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/eeriedeceit/front-facing-anime-pfp/?invite_code=0351da8e2c0c407f9980757a29fe58e6&sender=1065805205473485962',
-    yawMin: 338, yawMax: 360 },
-  { key: 'front',              label: 'Front View',         degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',
-    pinterestIrl: 'https://in.pinterest.com/Kyliekeewee/photo-bashing/?invite_code=ab8520c8a3ed4c7896d272ccbb8465a3&sender=1065805205473485962',
-    pinterestAnime: 'https://in.pinterest.com/eeriedeceit/front-facing-anime-pfp/?invite_code=0351da8e2c0c407f9980757a29fe58e6&sender=1065805205473485962',
-    yawMin: 0,   yawMax: 22 },
+    yawMin: 0, yawMax: 22 },
   { key: 'quarter_right',      label: '3/4 Right View',     degrees: '45°',  desc: 'Three-quarter angle to the right — great for facial structure and nose bridge',
     pinterestIrl: 'https://in.pinterest.com/avernon/34-faces/?invite_code=6161e1370caf497b8db355d86ca25dfc&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/ltzmeow/anime-characters-34-faces/?invite_code=a23111a75116428b8ef56ce335190c8f&sender=1065805205473485962',
@@ -50,6 +46,8 @@ const ANGLES = [
 
 function getAngleData(yawDeg) {
   const yaw = ((yawDeg % 360) + 360) % 360;
+  // handle front wrap (338-360)
+  if (yaw >= 338 || yaw < 22) return ANGLES[0];
   for (const a of ANGLES) {
     if (yaw >= a.yawMin && yaw < a.yawMax) return a;
   }
