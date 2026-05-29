@@ -1,0 +1,205 @@
+/* ── COLORS & FONTS (change these to restyle everything) ── */
+:root {
+  --bg:        #0b0c10;       /* main background */
+  --bg2:       #10121a;       /* sidebar background */
+  --surface:   #13151e;       /* cards / modals */
+  --border:    rgba(255,255,255,0.07); /* subtle borders */
+  --green:     #00e5a0;       /* accent color (IRL mode) */
+  --green-dim: rgba(0,229,160,0.15);
+  --text:      #e8eaf0;       /* primary text */
+  --muted:     #5a5f72;       /* secondary text */
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; background: var(--bg); color: var(--text); font-family: var(--font-body); overflow: hidden; }
+
+/* ── TOP NAV ── */
+#topNav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;               /* nav bar height */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(11,12,16,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+}
+
+/* Logo */
+#logo { display: flex; align-items: center; gap: 10px; }
+#logoMark {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--muted);
+  position: relative;
+}
+#logoMark::after {
+  content: '';
+  position: absolute;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--muted);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+#logoName { font-family: var(--font-mono); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.12em; }
+#logoSub  { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--muted); }
+
+/* IRL / ANIME toggle buttons */
+#modeToggle {
+  display: flex;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px; gap: 3px;
+}
+.modeBtn {
+  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  padding: 6px 18px; border: none; border-radius: 5px; cursor: pointer;
+  background: transparent; color: var(--muted); transition: all 0.2s;
+}
+.modeBtn.active { background: var(--green); color: #000; }
+.modeBtn:not(.active):hover { color: var(--text); background: rgba(255,255,255,0.07); }
+
+/* ── MAIN LAYOUT ── */
+#mainLayout {
+  position: fixed;
+  top: 52px; left: 0; right: 0; bottom: 0; /* fills screen below nav */
+  display: grid;
+  grid-template-columns: 320px 1fr; /* ← LEFT: model width | RIGHT: gallery takes rest */
+}
+
+/* ── 3D MODEL VIEWPORT (left panel) ── */
+#viewport {
+  position: relative;
+  background: var(--bg);
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+  max-height: 100%;           /* ← change this to shrink model height e.g. 500px */
+}
+
+/* Three.js canvas fills the viewport */
+#canvasContainer { width: 100%; height: 100%; }
+#canvasContainer canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* "DRAG TO ROTATE" pill at top of model */
+#dragHint {
+  position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em;
+  color: var(--muted); background: rgba(11,12,16,0.7);
+  border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px;
+  pointer-events: none; z-index: 10;
+}
+
+/* "IRL MODE" badge top-right of model */
+#modeTag {
+  position: absolute; top: 20px; right: 20px;
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em;
+  color: #000; background: var(--green); padding: 6px 14px; border-radius: 20px;
+  pointer-events: none; z-index: 10; transition: background 0.3s;
+}
+
+/* Blue grid fade at bottom of model */
+#gridOverlay {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 160px;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, transparent 0%, rgba(11,12,16,0.7) 100%),
+    repeating-linear-gradient(90deg, rgba(80,120,255,0.12) 0px, rgba(80,120,255,0.12) 1px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(0deg, rgba(80,120,255,0.12) 0px, rgba(80,120,255,0.12) 1px, transparent 1px, transparent 40px);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+}
+
+/* Compass bottom-left of model */
+#compass { position: absolute; bottom: 24px; left: 24px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+#compassCanvas { flex-shrink: 0; }
+#compassInfo { display: flex; flex-direction: column; gap: 4px; }
+#compassAngleLabel { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; color: var(--green); }
+#compassAngleSub   { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.08em; color: var(--muted); }
+
+/* ── RIGHT SIDEBAR (angle info + image gallery) ── */
+#sidebar { display: flex; flex-direction: column; background: var(--bg2); overflow: hidden; }
+
+/* Angle name / description strip */
+#angleInfo { padding: 24px 24px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+#angleHeader { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+#angleDot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); flex-shrink: 0; }
+#angleName    { font-weight: 600; font-size: 1.35rem; flex: 1; }
+#angleDegrees { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 4px 10px; border-radius: 6px; }
+#angleDesc    { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+
+/* Scrollable image gallery */
+#gallery { flex: 1; overflow-y: auto; padding: 16px; }
+#gallery::-webkit-scrollbar { width: 4px; }
+#gallery::-webkit-scrollbar-track { background: transparent; }
+#gallery::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Image grid */
+#galleryGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+#galleryGrid iframe { display: block; width: 100%; height: 100%; border: none; }
+
+#galleryGrid img {
+  width: 100%; aspect-ratio: 3/4; object-fit: cover;
+  border-radius: 10px; border: 1px solid var(--border);
+  transition: transform 0.2s, border-color 0.2s; cursor: pointer;
+}
+#galleryGrid img:hover { transform: scale(1.02); border-color: rgba(0,229,160,0.3); }
+
+/* Skeleton placeholders while images load */
+.imgSkeleton {
+  width: 100%; aspect-ratio: 3/4; border-radius: 10px;
+  background: linear-gradient(90deg, var(--surface) 25%, rgba(255,255,255,0.03) 50%, var(--surface) 75%);
+  background-size: 200% 100%; animation: shimmer 1.6s infinite;
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+#galleryEmpty { display: flex; align-items: center; justify-content: center; height: 200px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+
+/* Pinterest board button */
+#pinterestPrompt { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px; padding: 40px 0; }
+#pinterestPrompt p { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); }
+#pinterestBtn { display: inline-block; padding: 12px 28px; background: #e60023; color: #fff; border-radius: 8px; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-decoration: none; transition: opacity 0.2s; }
+#pinterestBtn:hover { opacity: 0.85; }
+#galleryGrid.loading .imgSkeleton { display: block; }
+
+/* ── HELP BUTTON (bottom-right corner) ── */
+#helpBtn {
+  position: fixed; bottom: 24px; right: 24px;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--muted); font-family: var(--font-mono); font-size: 0.85rem;
+  cursor: pointer; z-index: 200; transition: all 0.2s;
+}
+#helpBtn:hover { border-color: var(--green); color: var(--green); }
+
+/* Help modal overlay */
+#helpModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 300; align-items: center; justify-content: center; }
+#helpModal.open { display: flex; }
+#helpContent { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; max-width: 420px; width: 90%; }
+#helpContent h3 { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.1em; margin-bottom: 16px; color: var(--green); }
+#helpContent ul { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+#helpContent li { font-size: 0.9rem; color: var(--muted); padding-left: 16px; position: relative; }
+#helpContent li::before { content: '→'; position: absolute; left: 0; color: var(--green); }
+#helpContent strong { color: var(--text); }
+#modelNote { font-size: 0.8rem; color: var(--muted); background: rgba(255,200,0,0.07); border: 1px solid rgba(255,200,0,0.15); border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; }
+#modelNote code { font-family: var(--font-mono); font-size: 0.75rem; color: #ffcc00; }
+#helpClose { width: 100%; padding: 12px; background: var(--green); color: #000; border: none; border-radius: 8px; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 700; cursor: pointer; }
+
+/* ── ANIME MODE (swaps green accent to pink) ── */
+body.anime-mode { --green: #ff6eb4; --green-dim: rgba(255,110,180,0.15); --accent: #ff6eb4; }
+body.anime-mode #modeTag { background: #ff6eb4; }
+body.anime-mode #angleDot { background: #ff6eb4; box-shadow: 0 0 10px #ff6eb4; }
+
+/* ── LOADING OVERLAY (shown while FBX loads) ── */
+#loadingOverlay { position: absolute; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; z-index: 50; transition: opacity 0.5s; }
+#loadingOverlay.hidden { opacity: 0; pointer-events: none; }
+#loadingText { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); }
+#loadingBar { width: 160px; height: 2px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden; }
+#loadingBarFill { height: 100%; background: var(--green); width: 0%; transition: width 0.4s; border-radius: 2px; }

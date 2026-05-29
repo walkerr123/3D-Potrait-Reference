@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REFHEAD · 3D Portrait Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ── TOP NAV ─────────────────────────────────────── -->
+  <nav id="topNav">
+    <div id="logo">
+      <div id="logoMark"></div>
+      <span id="logoName">REFHEAD</span>
+      <span id="logoSub">3D PORTRAIT REFERENCE</span>
+    </div>
+
+    <div id="modeToggle">
+      <button class="modeBtn active" data-mode="irl" id="irlBtn">IRL</button>
+      <button class="modeBtn" data-mode="anime" id="animeBtn">ANIME</button>
+    </div>
+  </nav>
+
+  <!-- ── MAIN LAYOUT ────────────────────────────────── -->
+  <main id="mainLayout">
+
+    <!-- LEFT: 3D Viewport -->
+    <section id="viewport">
+      <div id="dragHint">DRAG TO ROTATE</div>
+      <div id="modeTag">IRL MODE</div>
+
+      <!-- Three.js canvas goes here -->
+      <div id="canvasContainer"></div>
+
+      <!-- Grid overlay bottom -->
+      <div id="gridOverlay"></div>
+
+      <!-- Compass -->
+      <div id="compass">
+        <canvas id="compassCanvas" width="80" height="80"></canvas>
+        <div id="compassInfo">
+          <span id="compassAngleLabel">FRONT</span>
+          <span id="compassAngleSub">DRAG TO ROTATE · RELEASE TO SNAP</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Info + Gallery -->
+    <section id="sidebar">
+      <div id="angleInfo">
+        <div id="angleHeader">
+          <span id="angleDot"></span>
+          <h2 id="angleName">Front View</h2>
+          <span id="angleDegrees">0°</span>
+        </div>
+        <p id="angleDesc">Direct frontal angle — reveals facial symmetry and proportions</p>
+      </div>
+
+      <div id="gallery">
+        <div id="galleryGrid" class="loading">
+          <div class="imgSkeleton"></div>
+          <div class="imgSkeleton"></div>
+          <div class="imgSkeleton"></div>
+          <div class="imgSkeleton"></div>
+        </div>
+        <div id="galleryEmpty" style="display:none">
+          <p>Rotate the head to load references</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── HELP BUTTON ────────────────────────────────── -->
+  <button id="helpBtn">?</button>
+  <div id="helpModal">
+    <div id="helpContent">
+      <h3>How to use REFHEAD</h3>
+      <ul>
+        <li><strong>Drag</strong> the 3D head to rotate it to any angle</li>
+        <li>Reference images update automatically based on the angle</li>
+        <li>Toggle <strong>IRL / ANIME</strong> mode for different reference styles</li>
+        <li>The compass shows your current view angle</li>
+      </ul>
+      <p id="modelNote">⚠️ Place your FBX model at <code>models/head.fbx</code> and run with Live Server.</p>
+      <button id="helpClose">Got it</button>
+    </div>
+  </div>
+
+  <!-- ── THREE.JS (ES Module) ───────────────────────── -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
