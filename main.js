@@ -10,47 +10,47 @@ let searchTimeout = null;
 
 // ── ANGLE MAP ─────────────────────────────────────
 const ANGLES = [
-  { key: 'front',              label: 'Front View',      degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',          yawMin: 338, yawMax: 360, pitchMin: -20, pitchMax: 20 },
-  { key: 'front',              label: 'Front View',      degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',          yawMin: 0,   yawMax: 22,  pitchMin: -20, pitchMax: 20,
+  { key: 'front',              label: 'Front View',        degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',
     pinterestIrl: 'https://in.pinterest.com/Kyliekeewee/photo-bashing/?invite_code=ab8520c8a3ed4c7896d272ccbb8465a3&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/eeriedeceit/front-facing-anime-pfp/?invite_code=0351da8e2c0c407f9980757a29fe58e6&sender=1065805205473485962',
-  },
-  { key: 'quarter_right',      label: '3/4 Right View',  degrees: '45°',  desc: 'Three-quarter angle to the right — great for facial structure and nose bridge',
+    yawMin: -22, yawMax: 22 },
+  { key: 'quarter_right',      label: '3/4 Right View',    degrees: '45°',  desc: 'Three-quarter angle to the right — great for facial structure and nose bridge',
     pinterestIrl: 'https://in.pinterest.com/avernon/34-faces/?invite_code=6161e1370caf497b8db355d86ca25dfc&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/ltzmeow/anime-characters-34-faces/?invite_code=a23111a75116428b8ef56ce335190c8f&sender=1065805205473485962',
-    yawMin: 22,  yawMax: 68,  pitchMin: -20, pitchMax: 20 },
+    yawMin: 22,  yawMax: 68 },
   { key: 'profile_right',      label: 'Side Profile Right', degrees: '90°', desc: 'Full side profile — jawline, nose silhouette, and ear placement',
     pinterestIrl: 'https://in.pinterest.com/stewartry/right-face/?invite_code=63764397760a4bfebb46b41e919a910b&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/right-faced/?invite_code=eb03c924444e4b7c9c87cf22277e20f7&sender=1065805205473485962',
-    yawMin: 68,  yawMax: 112, pitchMin: -20, pitchMax: 20 },
-  { key: 'back_quarter_right', label: 'Back 3/4 Right',  degrees: '135°', desc: 'Back three-quarter view — skull shape and back of neck',
+    yawMin: 68,  yawMax: 112 },
+  { key: 'back_quarter_right', label: 'Back 3/4 Right',    degrees: '135°', desc: 'Back three-quarter view — skull shape and back of neck',
     pinterestIrl: 'https://in.pinterest.com/naomiecsedii/back-faced-pfp/?invite_code=5f9eeea543eb4f7083bc5f21041589cb&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3',
-    yawMin: 112, yawMax: 157, pitchMin: -20, pitchMax: 20 },
-  { key: 'back',               label: 'Back View',       degrees: '180°', desc: 'Rear view — back of head, hair and skull proportions',
+    yawMin: 112, yawMax: 157 },
+  { key: 'back',               label: 'Back View',          degrees: '180°', desc: 'Rear view — back of head, hair and skull proportions',
     pinterestIrl: 'https://in.pinterest.com/naomiecsedii/back-faced-pfp/?invite_code=5f9eeea543eb4f7083bc5f21041589cb&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3',
-    yawMin: 157, yawMax: 203, pitchMin: -20, pitchMax: 20 },
-  { key: 'back_quarter_left',  label: 'Back 3/4 Left',   degrees: '225°', desc: 'Back three-quarter view to the left',
+    yawMin: 157, yawMax: 203 },
+  { key: 'back_quarter_left',  label: 'Back 3/4 Left',     degrees: '225°', desc: 'Back three-quarter view to the left',
     pinterestIrl: 'https://in.pinterest.com/naomiecsedii/back-faced-pfp/?invite_code=5f9eeea543eb4f7083bc5f21041589cb&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3',
-    yawMin: 203, yawMax: 248, pitchMin: -20, pitchMax: 20 },
-  { key: 'profile_left',       label: 'Side Profile Left', degrees: '270°', desc: 'Full left side profile — jawline, nose silhouette',
+    yawMin: 203, yawMax: 248 },
+  { key: 'profile_left',       label: 'Side Profile Left',  degrees: '270°', desc: 'Full left side profile — jawline, nose silhouette',
     pinterestIrl: 'https://in.pinterest.com/stewartry/left-face/?invite_code=949138a2346042309bc459843962c4c2&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/left-faced/?invite_code=3ebd4d5344c94a7abdefdd9c98d978e8&sender=1065805205473485962',
-    yawMin: 248, yawMax: 292, pitchMin: -20, pitchMax: 20 },
-  { key: 'quarter_left',       label: '3/4 Left View',   degrees: '315°', desc: 'Three-quarter angle to the left — facial structure reference',
+    yawMin: 248, yawMax: 292 },
+  { key: 'quarter_left',       label: '3/4 Left View',     degrees: '315°', desc: 'Three-quarter angle to the left — facial structure reference',
     pinterestIrl: 'https://in.pinterest.com/avernon/34-faces/?invite_code=6161e1370caf497b8db355d86ca25dfc&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/ltzmeow/anime-characters-34-faces/?invite_code=a23111a75116428b8ef56ce335190c8f&sender=1065805205473485962',
-    yawMin: 292, yawMax: 338, pitchMin: -20, pitchMax: 20 },
+    yawMin: 292, yawMax: 338 },
 ];
 
-function getAngleData(yawDeg, pitchDeg) {
+function getAngleData(yawDeg) {
   const yaw = ((yawDeg % 360) + 360) % 360;
+  const yawSigned = yaw > 180 ? yaw - 360 : yaw; // convert to -180..180
   for (const a of ANGLES) {
-    if (yaw >= a.yawMin && yaw < a.yawMax) return a;
+    if (yawSigned >= a.yawMin && yawSigned < a.yawMax) return a;
   }
-  return ANGLES[1]; // fallback to front (second entry)
+  return ANGLES[0];
 }
 
 // ── INIT THREE.JS ──────────────────────────────────
@@ -269,7 +269,7 @@ function onCameraChange() {
 
   updateCompass(yawDeg, pitchDeg);
 
-  const angleData = getAngleData(yawDeg, pitchDeg);
+  const angleData = getAngleData(yawDeg);
 
   // Update UI
   document.getElementById('angleName').textContent = angleData.label;
