@@ -392,7 +392,7 @@ async function fetchRefs(angleData) {
 
   try {
     const res = await fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=6&orientation=portrait`, {
-      headers: { Authorization: PEXELS_KEY }
+      headers: { 'Authorization': `${PEXELS_KEY}` }
     });
     const data = await res.json();
     console.log('pexels data:', data);
