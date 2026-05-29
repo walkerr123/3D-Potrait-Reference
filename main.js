@@ -10,70 +10,39 @@ let searchTimeout = null;
 
 // ── ANGLE MAP ─────────────────────────────────────
 const ANGLES = [
-  {
-    key: 'front',
-    label: 'Front View', degrees: '0°',
-    desc: 'Direct frontal angle — reveals facial symmetry and proportions',
+  { key: 'front',              label: 'Front View',      degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',          yawMin: 338, yawMax: 360, pitchMin: -20, pitchMax: 20 },
+  { key: 'front',              label: 'Front View',      degrees: '0°',   desc: 'Direct frontal angle — reveals facial symmetry and proportions',          yawMin: 0,   yawMax: 22,  pitchMin: -20, pitchMax: 20,
     pinterestIrl: 'https://in.pinterest.com/Kyliekeewee/photo-bashing/?invite_code=ab8520c8a3ed4c7896d272ccbb8465a3&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/eeriedeceit/front-facing-anime-pfp/?invite_code=0351da8e2c0c407f9980757a29fe58e6&sender=1065805205473485962',
-    yawMin: -22, yawMax: 22, pitchMin: -20, pitchMax: 20,
   },
-  {
-    key: 'quarter_right',
-    label: '3/4 Right View', degrees: '45°',
-    desc: 'Three-quarter angle to the right — great for facial structure and nose bridge',
+  { key: 'quarter_right',      label: '3/4 Right View',  degrees: '45°',  desc: 'Three-quarter angle to the right — great for facial structure and nose bridge',
     pinterestIrl: 'https://in.pinterest.com/avernon/34-faces/?invite_code=6161e1370caf497b8db355d86ca25dfc&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/ltzmeow/anime-characters-34-faces/?invite_code=a23111a75116428b8ef56ce335190c8f&sender=1065805205473485962',
-    yawMin: 22, yawMax: 68, pitchMin: -20, pitchMax: 20,
-  },
-  {
-    key: 'profile_right',
-    label: 'Side Profile Right', degrees: '90°',
-    desc: 'Full side profile — jawline, nose silhouette, and ear placement',
+    yawMin: 22,  yawMax: 68,  pitchMin: -20, pitchMax: 20 },
+  { key: 'profile_right',      label: 'Side Profile Right', degrees: '90°', desc: 'Full side profile — jawline, nose silhouette, and ear placement',
     pinterestIrl: 'https://in.pinterest.com/stewartry/right-face/?invite_code=63764397760a4bfebb46b41e919a910b&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/right-faced/?invite_code=eb03c924444e4b7c9c87cf22277e20f7&sender=1065805205473485962',
-    yawMin: 68, yawMax: 112, pitchMin: -20, pitchMax: 20,
-  },
-  {
-    key: 'back',
-    label: 'Back View', degrees: '180°',
-    desc: 'Rear view — back of head, hair and skull proportions',
+    yawMin: 68,  yawMax: 112, pitchMin: -20, pitchMax: 20 },
+  { key: 'back_quarter_right', label: 'Back 3/4 Right',  degrees: '135°', desc: 'Back three-quarter view — skull shape and back of neck',
     pinterestIrl: 'https://in.pinterest.com/naomiecsedii/back-faced-pfp/?invite_code=5f9eeea543eb4f7083bc5f21041589cb&sender=1065805205473485962',
-    pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%2C%20%227%22%3A%205969411380974793984%2C%20%228%22%3A%201065805136755718861%2C%20%2230%22%3A%20%22faced%20back%22%2C%20%2232%22%3A%2045%2C%20%2233%22%3A%20%5B1065805068083067217%2C%201065805068083067216%2C%201065805068083067214%2C%201065805068083067210%2C%201065805068083067207%2C%201065805068083067205%2C%201065805068083067203%2C%201065805068083067202%2C%201065805068083067199%2C%201065805068083066915%2C%201065805068083066876%5D%2C%20%2236%22%3A%20%5B1065805136755718861%5D%2C%20%2237%22%3A%20%22faced%20back%22%2C%20%2234%22%3A%200%2C%20%22102%22%3A%204%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3', pitchMin: -20, pitchMax: 20,
-  },
-  {
-    key: 'profile_left',
-    label: 'Side Profile Left', degrees: '270°',
-    desc: 'Full left side profile — jawline, nose silhouette',
+    pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3',
+    yawMin: 112, yawMax: 157, pitchMin: -20, pitchMax: 20 },
+  { key: 'back',               label: 'Back View',       degrees: '180°', desc: 'Rear view — back of head, hair and skull proportions',
+    pinterestIrl: 'https://in.pinterest.com/naomiecsedii/back-faced-pfp/?invite_code=5f9eeea543eb4f7083bc5f21041589cb&sender=1065805205473485962',
+    pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3',
+    yawMin: 157, yawMax: 203, pitchMin: -20, pitchMax: 20 },
+  { key: 'back_quarter_left',  label: 'Back 3/4 Left',   degrees: '225°', desc: 'Back three-quarter view to the left',
+    pinterestIrl: 'https://in.pinterest.com/naomiecsedii/back-faced-pfp/?invite_code=5f9eeea543eb4f7083bc5f21041589cb&sender=1065805205473485962',
+    pinterestAnime: 'https://in.pinterest.com/wx1kerr/faced-back/?request_params=%7B%221%22%3A%20130%7D&full_feed_title=faced%20back&view_parameter_type=3069&pins_display=3',
+    yawMin: 203, yawMax: 248, pitchMin: -20, pitchMax: 20 },
+  { key: 'profile_left',       label: 'Side Profile Left', degrees: '270°', desc: 'Full left side profile — jawline, nose silhouette',
     pinterestIrl: 'https://in.pinterest.com/stewartry/left-face/?invite_code=949138a2346042309bc459843962c4c2&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/wx1kerr/left-faced/?invite_code=3ebd4d5344c94a7abdefdd9c98d978e8&sender=1065805205473485962',
-    yawMin: 248, yawMax: 292, pitchMin: -20, pitchMax: 20,
-  },
-  {
-    key: 'quarter_left',
-    label: '3/4 Left View', degrees: '315°',
-    desc: 'Three-quarter angle to the left — facial structure reference',
+    yawMin: 248, yawMax: 292, pitchMin: -20, pitchMax: 20 },
+  { key: 'quarter_left',       label: '3/4 Left View',   degrees: '315°', desc: 'Three-quarter angle to the left — facial structure reference',
     pinterestIrl: 'https://in.pinterest.com/avernon/34-faces/?invite_code=6161e1370caf497b8db355d86ca25dfc&sender=1065805205473485962',
     pinterestAnime: 'https://in.pinterest.com/ltzmeow/anime-characters-34-faces/?invite_code=a23111a75116428b8ef56ce335190c8f&sender=1065805205473485962',
-    yawMin: 292, yawMax: 338, pitchMin: -20, pitchMax: 20,
-  },
-  // Back 3/4 — use back boards
-  {
-    key: 'back_quarter_right',
-    label: 'Back 3/4 Right', degrees: '135°',
-    desc: 'Back three-quarter view — skull shape and back of neck',
-    pinterestIrl: 'https://pin.it/6Afdc6y7D',
-    pinterestAnime: 'https://pin.it/4QfWPRyPU',
-    yawMin: 112, yawMax: 157, pitchMin: -20, pitchMax: 20,
-  },
-  {
-    key: 'back_quarter_left',
-    label: 'Back 3/4 Left', degrees: '225°',
-    desc: 'Back three-quarter view to the left',
-    pinterestIrl: 'https://pin.it/6Afdc6y7D',
-    pinterestAnime: 'https://pin.it/4QfWPRyPU',
-    yawMin: 203, yawMax: 248, pitchMin: -20, pitchMax: 20,
-  },
+    yawMin: 292, yawMax: 338, pitchMin: -20, pitchMax: 20 },
 ];
 
 function getAngleData(yawDeg, pitchDeg) {
@@ -81,7 +50,7 @@ function getAngleData(yawDeg, pitchDeg) {
   for (const a of ANGLES) {
     if (yaw >= a.yawMin && yaw < a.yawMax) return a;
   }
-  return ANGLES[0];
+  return ANGLES[1]; // fallback to front (second entry)
 }
 
 // ── INIT THREE.JS ──────────────────────────────────
@@ -379,8 +348,8 @@ const PEXELS_QUERIES = {
   back:               { irl: 'back of head portrait',       anime: 'anime back head' },
   profile_left:       { irl: 'side profile face left',      anime: 'anime side profile left' },
   quarter_left:       { irl: 'three quarter face portrait', anime: 'anime three quarter face' },
-  back_quarter_right: { irl: 'back of head portrait',       anime: 'anime back head' },
-  back_quarter_left:  { irl: 'back of head portrait',       anime: 'anime back head' },
+  back_quarter_right: { irl: 'back three quarter face portrait', anime: 'anime back three quarter face' },
+  back_quarter_left:  { irl: 'back three quarter face portrait', anime: 'anime back three quarter face' },
 };
 
 async function fetchRefs(angleData) {
